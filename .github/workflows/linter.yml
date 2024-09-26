@@ -1,0 +1,35 @@
+﻿---
+name: Lint Code Base
+
+on:
+  push:
+    branches-ignore: [main]
+    # Remove the line above to run when pushing to master
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Lint Code Base
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          # Full git history is needed to get a proper
+          # list of changed files within `super-linter`
+          fetch-depth: 0
+      - run: cat .github/super-linter.env >> "$GITHUB_ENV"
+      - name: Lint Code Base
+        uses: github/super-linter@v5
+        env:
+          # set to false to only check new or edited files
+          VALIDATE_ALL_CODEBASE: true
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
