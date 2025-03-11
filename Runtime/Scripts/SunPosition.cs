@@ -3,6 +3,7 @@
 * http://guideving.blogspot.co.uk/2010/08/sun-position-in-c.html
 */
 using System;
+using GeoTimeZone;
 using TimeZoneConverter;
 
 namespace Netherlands3D.Sun
@@ -12,11 +13,6 @@ namespace Netherlands3D.Sun
         private const double Deg2Rad = Math.PI / 180.0;
         private const double Rad2Deg = 180.0 / Math.PI;
         public static TimeZoneInfo CurrentTimeZone { get; set; }
-
-        static SunPosition()
-        {
-            CurrentTimeZone = TZConvert.GetTimeZoneInfo("Europe/Amsterdam");
-        }
         
         /*! 
          * \brief Calculates the sun light. 
@@ -35,6 +31,9 @@ namespace Netherlands3D.Sun
         public static void CalculateSunPosition(
             DateTime dateTime, double latitude, double longitude, out double outAzimuth, out double outAltitude)
         {
+            var timeZoneId = TimeZoneLookup.GetTimeZone(latitude, longitude).Result;
+            CurrentTimeZone = TZConvert.GetTimeZoneInfo(timeZoneId);
+
             // Convert to UTC  
             if (dateTime.Kind == DateTimeKind.Local || dateTime.Kind == DateTimeKind.Unspecified)
             {
