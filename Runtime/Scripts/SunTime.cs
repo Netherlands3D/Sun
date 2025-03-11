@@ -52,7 +52,7 @@ namespace Netherlands3D.Sun
         private float longitude;
         private float latitude;
         private DateTime time;
-
+        
         public DateTime Time
         {
             get => time;
@@ -61,7 +61,7 @@ namespace Netherlands3D.Sun
                 if (time == value)
                     return;
 
-                time = value;
+                time = value.ToLocalTime();
                 UpdateTimeOfDayPartsFromTime();
                 SetDirection();
                 timeOfDayChanged.Invoke(time);

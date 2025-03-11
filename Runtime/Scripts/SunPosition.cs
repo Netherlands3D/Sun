@@ -3,6 +3,7 @@
 * http://guideving.blogspot.co.uk/2010/08/sun-position-in-c.html
 */
 using System;
+using TimeZoneConverter;
 
 namespace Netherlands3D.Sun
 {
@@ -10,7 +11,13 @@ namespace Netherlands3D.Sun
     {
         private const double Deg2Rad = Math.PI / 180.0;
         private const double Rad2Deg = 180.0 / Math.PI;
+        public static TimeZoneInfo CurrentTimeZone { get; set; }
 
+        static SunPosition()
+        {
+            CurrentTimeZone = TZConvert.GetTimeZoneInfo("Europe/Amsterdam");
+        }
+        
         /*! 
          * \brief Calculates the sun light. 
          * 
@@ -29,8 +36,13 @@ namespace Netherlands3D.Sun
             DateTime dateTime, double latitude, double longitude, out double outAzimuth, out double outAltitude)
         {
             // Convert to UTC  
-            dateTime = dateTime.ToUniversalTime();
-
+            if (dateTime.Kind == DateTimeKind.Local || dateTime.Kind == DateTimeKind.Unspecified)
+            {
+                dateTime = TimeZoneInfo.ConvertTime(dateTime, CurrentTimeZone);
+            } 
+            
+            dateTime = TimeZoneInfo.ConvertTimeToUtc(dateTime, CurrentTimeZone);
+            
             // Number of days from J2000.0.  
             double julianDate = 367 * dateTime.Year -
                 (int)((7.0 / 4.0) * (dateTime.Year +
