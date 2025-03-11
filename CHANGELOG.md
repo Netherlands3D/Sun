@@ -5,6 +5,11 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2023-09-03
+
+### Added
+- Added Support for time zones and local time. 2 DLLs were added that were built from https://github.com/mattjohnsonpint/TimeZoneConverter and https://github.com/mattjohnsonpint/GeoTimeZone to convert time zones platform independently, and to be able to convert from local time to UTC based on the coordinate that was provided to calculate the sun position.
+
 ## [1.3.0] - 2023-09-03
 
 ### Added
