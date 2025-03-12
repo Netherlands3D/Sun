@@ -1,3 +1,3 @@
-[submodule "Runtime/Plugins/TimeZoneConverter"]
-	path = Runtime/Plugins/TimeZoneConverter
+[submodule "Runtime/Scripts/Libraries/TimeZoneConverter"]
+	path = Runtime/Scripts/Libraries/TimeZoneConverter
 	url = https://github.com/mattjohnsonpint/TimeZoneConverter.git
